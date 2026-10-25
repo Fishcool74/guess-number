@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>魚酷終極密碼</title>
+</head>
+<body>
+    <h1>終極密碼!</h1>
+    <p>猜個數字吧!</p>
+    <input id="guess-input" type="number">
+    <button id="guess-bt">猜</button>
+    <p id="mes">現在範圍:1~100</p>
+    <button id = "re" style="display: none;">再來一局</button>
+
+    <script>
+        const gsbutton  = document.getElementById("guess-bt");
+        const mes = document.getElementById("mes");
+        const guessinput = document.getElementById("guess-input");
+        const ans = Math.floor(Math.random()*100)+1;
+        const answer = document.getElementById("answer");
+        const again = document.getElementById("re");
+        let max = 100;
+        let min = 1;  
+        function check(){
+            const guess = guessinput.value;
+            if(guess == ""){
+                mes.textContent = "請先輸入數字";
+                setTimeout(function(){mes.textContent = "現在範圍:" + min + "~" + max}, 500);
+            }
+            else if(guess > max || guess < min){
+                mes.textContent = "超出範圍";
+                setTimeout(function(){mes.textContent = "現在範圍:" + min + "~" + max}, 500);
+            }
+            else if(guess > ans){
+                max = guess;
+                mes.textContent = "現在範圍:" + min + "~" + max;
+            }
+            else if(guess < ans){
+                min = guess;
+                mes.textContent = "現在範圍:" + min + "~" + max;
+            }
+            else{
+                mes.textContent = "猜到了! 耶!";
+                again.style.display = "block";
+            }
+            guessinput.value = "";
+        }
+        gsbutton.addEventListener("click", check);
+        again.addEventListener("click", function(){location.reload()});
+    </script>
+</body>
+</html>
