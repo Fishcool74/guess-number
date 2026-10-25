@@ -3,12 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>魚酷終極密碼</title>
+
+    <style>
+        .ga{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        body {
+            font-size: 48px;
+        }
+
+        h1 {
+            font-size: 96px;
+        }
+
+        input {
+            font-size: 56px;
+            width: 400px;
+            padding: 20px;
+        }
+
+        button {
+            font-size: 56px;
+            padding: 20px 40px;
+        }
+    </style>
 </head>
 <body>
     <h1>終極密碼!</h1>
     <p>猜個數字吧!</p>
-    <input id="guess-input" type="number">
-    <button id="guess-bt">猜</button>
+    <div class="ga">
+        <input id="guess-input" type="number">
+        <button id="guess-bt" style="display: block;">猜</button>
+    </div>
     <p id="mes">現在範圍:1~100</p>
     <button id = "re" style="display: none;">再來一局</button>
 
@@ -23,24 +51,33 @@
         let min = 1;  
         function check(){
             const guess = guessinput.value;
+            const guessn = Number(guessinput.value);
+            if (!Number.isInteger(guessn)) {
+                mes.textContent = "請輸入整數";
+                setTimeout(function(){mes.textContent = "現在範圍:" + min + "~" + max}, 500);
+                guessinput.value = "";
+                return;
+            }
             if(guess == ""){
                 mes.textContent = "請先輸入數字";
                 setTimeout(function(){mes.textContent = "現在範圍:" + min + "~" + max}, 500);
+                return;
             }
-            else if(guess > max || guess < min){
+            if(guessn > max || guessn < min){
                 mes.textContent = "超出範圍";
                 setTimeout(function(){mes.textContent = "現在範圍:" + min + "~" + max}, 500);
             }
-            else if(guess > ans){
-                max = guess;
+            else if(guessn > ans){
+                max = guessn;
                 mes.textContent = "現在範圍:" + min + "~" + max;
             }
-            else if(guess < ans){
-                min = guess;
+            else if(guessn < ans){
+                min = guessn;
                 mes.textContent = "現在範圍:" + min + "~" + max;
             }
             else{
                 mes.textContent = "猜到了! 耶!";
+                gsbutton.style.display = "none";
                 again.style.display = "block";
             }
             guessinput.value = "";
